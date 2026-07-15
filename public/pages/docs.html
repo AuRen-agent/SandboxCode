@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentation - SandboxCodex</title>
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="../pages/pages.css">
+</head>
+<body>
+  <header>
+    <div class="status-strip">
+      <span>SandboxCodex v0.2.0</span>
+      <span class="ok">✓ All systems operational</span>
+    </div>
+    <div class="header-inner">
+      <div class="brand">
+        Sandbox<span class="brand-sub">Code<span class="cursor">x</span></span>
+      </div>
+      <nav class="desktop-nav">
+        <a href="../index.html">Home</a>
+        <a href="./docs.html">Docs</a>
+        <a href="./templates.html">Templates</a>
+        <a href="./integrations.html">Integrations</a>
+        <a href="./community.html">Community</a>
+      </nav>
+      <div class="header-right">
+        <button class="menu-btn" id="menuOpen"><span></span></button>
+        <a href="./auth.html" class="btn btn-primary btn-sm header-cta">Sign In</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="docs-container">
+    <aside class="docs-sidebar">
+      <div class="docs-search">
+        <input type="text" placeholder="Search docs..." class="search-input">
+      </div>
+      <nav class="docs-nav">
+        <h3>Getting Started</h3>
+        <ul>
+          <li><a href="#intro">Introduction</a></li>
+          <li><a href="#install">Installation</a></li>
+          <li><a href="#quickstart">Quick Start</a></li>
+        </ul>
+        <h3>Configuration</h3>
+        <ul>
+          <li><a href="#config">Setup</a></li>
+          <li><a href="#env">Environment Variables</a></li>
+          <li><a href="#auth">Authentication</a></li>
+        </ul>
+        <h3>API Reference</h3>
+        <ul>
+          <li><a href="#api-overview">Overview</a></li>
+          <li><a href="#endpoints">Endpoints</a></li>
+          <li><a href="#errors">Error Handling</a></li>
+        </ul>
+        <h3>Examples</h3>
+        <ul>
+          <li><a href="#examples">Code Examples</a></li>
+          <li><a href="#recipes">Recipes</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="docs-content">
+      <section id="intro" class="doc-section">
+        <h2>Introduction</h2>
+        <p>SandboxCodex is an AI-powered platform for automated code review, testing, and PR generation.</p>
+      </section>
+
+      <section id="install" class="doc-section">
+        <h2>Installation</h2>
+        <p>Get started by installing SandboxCodex:</p>
+        <div class="code-block">
+          npm install sandboxcodex
+        </div>
+      </section>
+
+      <section id="quickstart" class="doc-section">
+        <h2>Quick Start</h2>
+        <p>Create your first project in 3 steps:</p>
+        <div class="code-block">
+          sandboxcodex init my-project
+          cd my-project
+          npm start
+        </div>
+      </section>
+
+      <section id="config" class="doc-section">
+        <h2>Configuration</h2>
+        <p>Configure SandboxCodex via <code>sandbox.config.js</code>:</p>
+        <div class="code-block">
+module.exports = {
+  projectName: 'my-project',
+  sandbox: { runtime: 'nodejs' },
+  github: { token: process.env.GITHUB_TOKEN }
+};
+        </div>
+      </section>
+    </main>
+
+    <aside class="docs-toc">
+      <h3>On this page</h3>
+      <ul>
+        <li><a href="#intro">Introduction</a></li>
+        <li><a href="#install">Installation</a></li>
+        <li><a href="#quickstart">Quick Start</a></li>
+        <li><a href="#config">Configuration</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <footer class="wrap">
+    <span>© 2026 SandboxCodex. All rights reserved.</span>
+    <span><a href="#">Terms</a> | <a href="#">Privacy</a> | <a href="#">Support</a></span>
+  </footer>
+
+  <script src="../main.js"></script>
+</body>
+</html>
