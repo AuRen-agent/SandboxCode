@@ -1,0 +1,30 @@
+Repository: `nguyenvanhoaithuong0507-hub/SandboxCode`. Đây là một dự án Docusaurus 3 (xem `package.json`, `docusaurus.config.js`) cần được build và deploy lên GitHub Pages tại `https://nguyenvanhoaithuong0507-hub.github.io/SandboxCode/`. Mục tiêu: sửa tất cả lỗi cản trở việc build/deploy và đưa site lên internet thành công.
+
+Thực hiện các thay đổi sau:
+
+1. Tạo workflow deploy Docusaurus mới `.github/workflows/deploy.yml`:
+   - Trigger: `push` vào branch `main` và `workflow_dispatch`.
+   - Permissions: `contents: read`, `pages: write`, `id-token: write`.
+   - Concurrency group `"pages"` với `cancel-in-progress: false`.
+   - Job build: `actions/checkout@v4`, `actions/setup-node@v4` (node 20, `cache: 'npm'`), cài dependencies (dùng `npm ci` nếu có lockfile, nếu không dùng `npm install`), chạy `npm run build`, dùng `actions/configure-pages@v5` và `actions/upload-pages-artifact@v3` với `path: build` (thư mục output của Docusaurus).
+   - Job deploy: `needs: build`, environment `github-pages`, dùng `actions/deploy-pages@v5`.
+
+2. Xóa hai workflow deploy Pages xung đột không phù hợp với Docusaurus: `.github/workflows/static.yml` và `.github/workflows/jekyll-gh-pages.yml`. Chúng tranh cùng concurrency group `"pages"` và deploy sai nội dung.
+
+3. Sửa `.github/workflows/node.js.yml`:
+   - Đổi `engines`-conflict: giữ matrix node `[18.x, 20.x, 22.x]`.
+   - Thay bước `npm ci` bằng `npm install` (vì repo hiện không có `package-lock.json`), hoặc tốt hơn là commit thêm `package-lock.json`.
+   - Xóa hoặc thay bước `npm test` bằng `npm run build` (dự án không có test), để CI không fail vì thiếu script `test`.
+
+4. Sửa `package.json`: đổi `engines.node` từ `">=16.20"` thành `">=18.0"` để khớp Docusaurus 3.
+
+5. Sửa `README.md` cho đúng thực tế dự án Docusaurus:
+   - Thay `npm run dev` bằng `npm start`.
+   - Cập nhật phần "Project Structure" để phản ánh cấu trúc Docusaurus thật: `docs/`, `src/pages/` (`index.js`, `dashboard.js`), `src/css/custom.css`, `docusaurus.config.js`, `sidebars.js` — thay cho mô tả `public/` sai hiện tại.
+   - Bỏ hoặc sửa các lệnh `npm test` trong README vì không có test.
+
+6. Sửa `public/main.js`: thêm lời gọi `initializeCopyButtons();` vào trong listener `DOMContentLoaded` (cùng với các hàm initialize khác ở đầu file) để nút copy code hoạt động.
+
+7. Rà soát và xóa các workflow bảo mật/linter không liên quan tới stack JS/Docusaurus trong `.github/workflows/` (ví dụ: `prisma.yml`, `psalm.yml`, `pyre.yml`, `pysa.yml`, `rust-clippy.yml`, `puppet-lint.yml`, `sobelow.yml`, `powershell.yml` và các scan khác dành cho PHP/Python/Rust/Puppet/Elixir) để tránh CI fail vô ích. Có thể giữ lại `codeql.yml` nếu cấu hình cho JavaScript.
+
+Sau khi thay đổi, đảm bảo `npm install` và `npm run build` chạy thành công cục bộ (build Docusaurus không có broken link vì `onBrokenLinks: 'throw'`). Cần bật GitHub Pages với source là "GitHub Actions" trong cài đặt repo để workflow deploy hoạt động (ghi chú điều này trong PR description vì đây là thao tác thủ công trên GitHub).
